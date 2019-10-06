@@ -4,7 +4,7 @@ import xlrd
 import xlwt 
 import os
 # filename=u'step3/广州银行ESB项目_字段映射_网络信贷系统_V1.3.4addheadandcases.xls'
-dirname='excelcases/'
+dirname='step3/'
 filenamelist=os.listdir(dirname)
 for filename in filenamelist:
     wb=xlrd.open_workbook(dirname+filename)
@@ -29,7 +29,7 @@ Resource          元素层.robot
 *** Test Cases ***
 '''%k
             f.write(prestring)
-            for i in range(0,sheet.nrows):
+            for i in range(1,sheet.nrows):
                 if sheet.cell_value(i,0)=='':continue
                 f.write(sheet.cell_value(i,0))
                 casestring='''

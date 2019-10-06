@@ -38,4 +38,13 @@ sendmessage
     \    Exit For Loop If    '${value[${i}][1]}'=='${TEST_NAME}'
     ${input}    get column values    ${setdict['sheet']}    1
     log    ${input[${title}][1]}
-    sendmessage    ${input[${title}][1]}
+    ${response}    sendmessage    ${input[${title}][1]}
+    log    ${response.text}
+    Put String To Cell    ${setdict['sheet']}    3    ${title}    ${response.text}
+    ${outputtemplate}    read cell data by coordinates    ${setdict['sheet']}    2    ${title}
+    ${outputtemplatejson}    evaluate    json.loads('''${outputtemplate}''')    json
+    ${responsejson}    evaluate    json.loads('''${response.text}''')    json
+    ${diff}    evaluate    json_tools.diff(${outputtemplatejson}, ${responsejson})    json_tools
+    ${diffstring}    convert to string    ${diff}
+    Put String To Cell    ${setdict['sheet']}    4    ${title}    ${diffstring}
+    save excel    ${resultfile}

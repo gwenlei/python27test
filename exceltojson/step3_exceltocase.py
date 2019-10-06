@@ -115,12 +115,17 @@ for i in filenamelist:
         typecol=9
         constrainstcol=10
         remarkcol=12
-        valuecol=14
-        jsonnum=sheet.ncols-14
+        valuecol=18
+        jsonnum=sheet.ncols-valuecol
         print('jsonnum=',jsonnum)
-        jsonvaluecol=sheet.ncols-15
         resultsheet=resultwb.add_sheet(j)        
         resultdir='step3/'
+        resultsheet.write(0,0,u'用例名称')
+        resultsheet.write(0,1,u'输入报文')
+        resultsheet.write(0,2,u'输出报文')
+        resultsheet.write(0,3,u'实际输出报文')
+        resultsheet.write(0,4,u'实际输出对比')
+        resultsheet.write(0,5,u'结论')
         for k in range(0,jsonnum):
             print('k=',k)
             tmpvaluecol=valuecol+k
@@ -130,9 +135,9 @@ for i in filenamelist:
             outputstring='{'+outputheadstring+outputbodystring+'}'
             print(inputstring)
             print(outputstring)                                            
-            resultsheet.write(k,0,sheet.cell_value(0,tmpvaluecol))
-            resultsheet.write(k,1,inputstring)
-            resultsheet.write(k,2,outputstring)
+            resultsheet.write(k+1,0,sheet.cell_value(0,tmpvaluecol))
+            resultsheet.write(k+1,1,inputstring)
+            resultsheet.write(k+1,2,outputstring)
             
             resultfilename=resultdir+i
             resultwb.save(resultfilename)
